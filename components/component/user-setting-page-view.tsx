@@ -14,35 +14,6 @@ import { JSX, SVGProps } from "react";
 export default function UserSettingPageView() {
     return (
         <div className="flex flex-col w-full min-h-screen bg-gray-100 dark:bg-gray-900">
-            <header className="flex items-center h-16 px-4 border-b border-gray-200 dark:border-gray-800 shrink-0 md:px-6">
-                <Link href="#" className="flex items-center gap-2 text-lg font-semibold sm:text-base mr-4">
-                    <FrameIcon className="w-6 h-6" />
-                    <span className="sr-only">Acme Inc</span>
-                </Link>
-                <nav className="hidden font-medium sm:flex flex-row items-center gap-5 text-sm lg:gap-6">
-                    <Link href="#" className="text-gray-500 dark:text-gray-400" >
-                        Projects
-                    </Link>
-                    <Link href="#" className="text-gray-500 dark:text-gray-400" >
-                        Deployments
-                    </Link>
-                    <Link href="#" className="text-gray-500 dark:text-gray-400" >
-                        Analytics
-                    </Link>
-                    <Link href="#" className="text-gray-500 dark:text-gray-400" >
-                        Logs
-                    </Link>
-                    <Link href="#" className="font-bold" >
-                        Settings
-                    </Link>
-                </nav>
-                <div className="flex items-center w-full gap-4 md:ml-auto md:gap-2 lg:gap-4">
-                    <Button variant="ghost" size="sm" className="rounded-full ml-auto">
-                        <Image src="/placeholder.svg" width="32" height="32" className="rounded-full border" alt="Avatar" />
-                        <span className="sr-only">Toggle user menu</span>
-                    </Button>
-                </div>
-            </header>
             <main className="flex-1 flex flex-col gap-4 p-4 md:gap-8 md:p-10">
                 <div className="max-w-6xl w-full mx-auto grid gap-2">
                     <h1 className="font-semibold text-3xl">Settings</h1>
