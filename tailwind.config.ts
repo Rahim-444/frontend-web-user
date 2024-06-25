@@ -1,11 +1,13 @@
 import type { Config } from 'tailwindcss';
 import {nextui} from "@nextui-org/react";
+const flowbite = require("flowbite-react/tailwind");
 export default {
   content: [
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}"
+    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
+    flowbite.content(),
   ],
   theme: {
     transparent: 'transparent',
@@ -114,5 +116,6 @@ export default {
         // ... custom themes
       },
     }),
+    flowbite.plugin(),
   ]
 } satisfies Config;
