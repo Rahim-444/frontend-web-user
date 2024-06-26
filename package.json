@@ -16,7 +16,6 @@
     "@vercel/speed-insights": "^1.0.5",
     "autoprefixer": "^10.4.19",
     "axios": "^1.6.5",
-    "flowbite-react": "^0.10.1",
     "next": "^14.2.4",
     "zod": "^3.23.7"
   },

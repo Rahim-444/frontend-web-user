@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Button, Checkbox, Modal, Table } from 'flowbite-react';
+import React, { Fragment, useState } from 'react';
+import { Button } from '@nextui-org/react';
+import { Dialog, Transition } from '@headlessui/react';
 
 const TeamMemberData = [
   {
@@ -11,7 +12,7 @@ const TeamMemberData = [
 ];
 
 const TeamMembersPageView = () => {
-  const [openModal, setOpenModal] = useState(false);
+  const [open, setOpen] = useState(true);
 
   return (
     <div className="w-10/12 mx-auto">
@@ -20,7 +21,7 @@ const TeamMembersPageView = () => {
         <button
           type="button"
           className="font-semibold bg-[#ff8601] text-white px-5 py-2 rounded-md hover:text-white"
-          onClick={() => setOpenModal(true)}
+          onClick={() => setOpen(true)}
         >
           Add Team Member
         </button>
@@ -82,30 +83,57 @@ const TeamMembersPageView = () => {
       <div>
         <h3 className="text-sm md:text-xl font-bold py-2">All Team Members</h3>
         <div className="overflow-x-auto">
-          <Table hoverable>
-            <Table.Head>
-              <Table.HeadCell className="p-4">
-                <Checkbox />
-              </Table.HeadCell>
-              <Table.HeadCell>Name</Table.HeadCell>
-              <Table.HeadCell>Job Title</Table.HeadCell>
-              <Table.HeadCell>Role</Table.HeadCell>
-            </Table.Head>
-            <Table.Body className="divide-y">
-              {TeamMemberData?.map((item) => (
-                <Table.Row className="bg-white dark:border-gray-700 dark:text-tremor-background-emphasis">
-                  <Table.Cell className="p-4">
-                    <Checkbox />
-                  </Table.Cell>
-                  <Table.Cell className="whitespace-nowrap font-medium text-tremor-background-emphasis dark:text-white">
+          <table className="min-w-full divide-y divide-gray-300">
+            <thead>
+              <tr>
+                <th scope="col" className="relative px-7 sm:w-12 sm:px-6">
+                  <input
+                    type="checkbox"
+                    className="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                  />
+                </th>
+                <th
+                  scope="col"
+                  className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
+                >
+                  Name
+                </th>
+                <th
+                  scope="col"
+                  className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                >
+                  Job Title
+                </th>
+                <th
+                  scope="col"
+                  className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                >
+                  Role
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200">
+              {TeamMemberData.map((item) => (
+                <tr key={item.id}>
+                  <td className="relative px-7 sm:w-12 sm:px-6">
+                    <input
+                      type="checkbox"
+                      className="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                    />
+                  </td>
+                  <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
                     {item.name}
-                  </Table.Cell>
-                  <Table.Cell>{item.jobTitle}</Table.Cell>
-                  <Table.Cell>{item.role}</Table.Cell>
-                </Table.Row>
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    {item.jobTitle}
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    {item.role}
+                  </td>
+                </tr>
               ))}
-            </Table.Body>
-          </Table>
+            </tbody>
+          </table>
         </div>
         <div className="flex justify-center items-center my-3">
           <button
@@ -123,104 +151,131 @@ const TeamMembersPageView = () => {
           </a>
         </p>
       </div>
-      <Modal show={openModal} onClose={() => setOpenModal(false)}>
-        <Modal.Header>
-          Add Team Member
-          <p className="text-center text-[16px] py-3 leading-5 text-tremor-background-emphasis">
-            Add a few details to get started
-          </p>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="space-y-6">
-            <form>
-              <div className="grid grid-cols-12 gap-5">
-                <div className="col-span-12 md:col-span-6">
-                  <label
-                    htmlFor="firstname"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    First Name*
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      type="text"
-                      name="firstname"
-                      id="firstname"
-                      className="block w-full rounded-md border-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset  ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
+      <Transition.Root show={open} as={Fragment}>
+        <Dialog className="relative z-10" onClose={setOpen}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                enterTo="opacity-100 translate-y-0 sm:scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              >
+                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-3xl sm:p-6">
+                  <div className="pb-5 border-b mb-4">
+                    <h2 className="text-lg md:text-2xl font-bold py-2">
+                      Add Team Member
+                    </h2>
+                    <p className="text-sm py-1 leading-4 text-tremor-background-emphasis">
+                      Add a few details to get started
+                    </p>
                   </div>
-                </div>
-                <div className="col-span-12 md:col-span-6">
-                  <label
-                    htmlFor="lastname"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Last Name*
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      type="text"
-                      name="lastname"
-                      id="lastname"
-                      className="block w-full rounded-md border-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset  ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
+                  <form>
+                    <div className="grid grid-cols-12 gap-5">
+                      <div className="col-span-12 md:col-span-6">
+                        <label
+                          htmlFor="firstname"
+                          className="block text-sm font-medium leading-6 text-gray-900"
+                        >
+                          First Name*
+                        </label>
+                        <div className="mt-2">
+                          <input
+                            type="text"
+                            name="firstname"
+                            id="firstname"
+                            className="block w-full rounded-md border-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset  ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          />
+                        </div>
+                      </div>
+                      <div className="col-span-12 md:col-span-6">
+                        <label
+                          htmlFor="lastname"
+                          className="block text-sm font-medium leading-6 text-gray-900"
+                        >
+                          Last Name*
+                        </label>
+                        <div className="mt-2">
+                          <input
+                            type="text"
+                            name="lastname"
+                            id="lastname"
+                            className="block w-full rounded-md border-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset  ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          />
+                        </div>
+                      </div>
+                      <div className="col-span-12 md:col-span-6">
+                        <label
+                          htmlFor="email"
+                          className="block text-sm font-medium leading-6 text-gray-900"
+                        >
+                          Email*
+                        </label>
+                        <div className="mt-2">
+                          <input
+                            type="email"
+                            name="email"
+                            id="email"
+                            className="block w-full rounded-md border-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset  ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          />
+                        </div>
+                      </div>
+                      <div className="col-span-12 md:col-span-6">
+                        <label
+                          htmlFor="role"
+                          className="block text-sm font-medium leading-6 text-gray-900"
+                        >
+                          Role
+                        </label>
+                        <select
+                          id="role"
+                          name="role"
+                          className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          defaultValue="Owner"
+                        >
+                          <option>Owner</option>
+                          <option>Member</option>
+                        </select>
+                      </div>
+                    </div>
+                  </form>
+                  <div className="mt-5 sm:mt-6 flex justify-end">
+                    <Button
+                      className="border-0 px-4 mr-2"
+                      onClick={() => setOpen(false)}
+                    >
+                      <p className="text-lg font-semibold text-tremor-background-emphasis">
+                        Cancel
+                      </p>
+                    </Button>
+                    <Button
+                      onClick={() => setOpen(false)}
+                      className="bg-[#ff8601] px-4"
+                    >
+                      <p className="text-lg font-semibold">Add</p>
+                    </Button>
                   </div>
-                </div>
-                <div className="col-span-12 md:col-span-6">
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Email*
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      type="email"
-                      name="email"
-                      id="email"
-                      className="block w-full rounded-md border-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset  ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                </div>
-                <div className="col-span-12 md:col-span-6">
-                  <label
-                    htmlFor="role"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Role
-                  </label>
-                  <select
-                    id="role"
-                    name="role"
-                    className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    defaultValue="Owner"
-                  >
-                    <option>Owner</option>
-                    <option>Member</option>
-                  </select>
-                </div>
-              </div>
-            </form>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
           </div>
-        </Modal.Body>
-        <Modal.Footer className="flex justify-end">
-          <Button
-            color="gray"
-            className="border-0 px-2"
-            onClick={() => setOpenModal(false)}
-          >
-            <p className="text-lg font-semibold text-tremor-background-emphasis">
-              Cancel
-            </p>
-          </Button>
-          <Button
-            onClick={() => setOpenModal(false)}
-            className="bg-[#ff8601] px-2"
-          >
-            <p className="text-lg font-semibold">Add</p>
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        </Dialog>
+      </Transition.Root>
     </div>
   );
 };
