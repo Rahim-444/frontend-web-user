@@ -144,7 +144,7 @@ const TeamMembersPageView = () => {
           </button>
         </div>
         <p className="text-center text-[16px] leading-5 text-tremor-background-emphasis">
-          We'd like to hear your thoughts on how we can make working with your
+          We&apos;d like to hear your thoughts on how we can make working with your
           team better.{' '}
           <a href="#" className="text-tremor-brand-subtle ml-1">
             Share Feedback
