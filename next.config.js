@@ -1,11 +1,9 @@
 /** @type {import('next').NextConfig} */
 
-
-var devconfig={};
+var devconfig = {};
 try {
-  devconfig = require('./dev.next.config.js')
-} catch (ex) {}
-
+  devconfig = require('./dev.next.config.js');
+} catch (ex) { }
 
 const nextConfig = {
   basePath: '/user',
