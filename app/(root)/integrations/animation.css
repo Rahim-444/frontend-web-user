@@ -1,0 +1,27 @@
+.nav-item {
+  position: relative;
+  cursor: pointer;
+}
+
+.nav-item::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2.5px;
+  background: #ea580b;
+  transition: 0.3s;
+  left: 50%;
+  bottom: 0px;
+}
+
+.nav-item:hover {
+  transform: scale(1.1);
+  text-decoration: none;
+}
+
+.nav-item:hover::after {
+  width: 100%;
+  left: 0;
+  right: 0;
+  transform: translateX(0);
+}
